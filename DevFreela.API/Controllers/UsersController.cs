@@ -1,7 +1,9 @@
 ﻿using DevFreela.Application.Commands.InsertUserCommand;
 using DevFreela.Application.Commands.InsertUserSkills;
+using DevFreela.Application.Commands.LoginUser;
 using DevFreela.Application.Queries.GetUserById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.API.Controllers
@@ -53,6 +55,20 @@ namespace DevFreela.API.Controllers
             // Processar a imagem (futuro desenvolvimento)
 
             return Ok(description);
+        }
+
+        [HttpPut("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
+        {
+            var loginUserviewModel = await _mediator.Send(command);
+
+            if (loginUserviewModel == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(loginUserviewModel);
         }
     }
 }
