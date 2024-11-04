@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DevFreela.Application.Commands.InsertProject
 {
-    public class InsertProjectCommand : IRequest<ResultViewModel<int>>
+    public class InsertProjectCommand : IRequest<int>
     {
         public string Title { get; set; }
         public string Description { get; set; }

@@ -1,10 +1,9 @@
-﻿using DevFreela.Application.Models;
-using DevFreela.Core.Entities;
+﻿using DevFreela.Core.Entities;
 using MediatR;
 
 namespace DevFreela.Application.Commands.InsertUserCommand
 {
-    public class InsertUserCommand : IRequest<ResultViewModel<int>>
+    public class InsertUserCommand : IRequest<int>
     {
         public string FullName { get; set; }
         public string Email { get; set; }

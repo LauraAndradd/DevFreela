@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevFreela.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
@@ -33,6 +34,7 @@ namespace DevFreela.API.Controllers
 
         // POST api/users
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post(InsertUserCommand command)
         {
             await _mediator.Send(command);
