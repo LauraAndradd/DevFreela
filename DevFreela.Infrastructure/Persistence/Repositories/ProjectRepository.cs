@@ -6,34 +6,34 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
-        private readonly DevFreelaDbContext _context;
-        public ProjectRepository(DevFreelaDbContext context)
+        private readonly DevFreelaDbContext _dbContext;
+        public ProjectRepository(DevFreelaDbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
-        public async Task<int> Add(Project project)
+        public async Task<int> AddAsync(Project project)
         {
-            await _context.Projects.AddAsync(project);
-            _context.SaveChanges();
+            await _dbContext.Projects.AddAsync(project);
+            _dbContext.SaveChanges();
 
             return project.Id;
         }
 
-        public async Task AddComment(ProjectComment comment)
+        public async Task AddCommentAsync(ProjectComment projectComment)
         {
-            await _context.ProjectComments.AddAsync(comment);
-            await _context.SaveChangesAsync();
+            await _dbContext.ProjectComments.AddAsync(projectComment);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> Exists(int id)
         {
-            return await _context.Projects.AnyAsync(p => p.Id == id);
+            return await _dbContext.Projects.AnyAsync(p => p.Id == id);
         }
 
-        public async Task<List<Project>> GetAll()
+        public async Task<List<Project>> GetAllAsync()
         {
-            var projects = await _context.Projects
+            var projects = await _dbContext.Projects
                 .Include(p => p.Client)
                 .Include(p => p.Freelancer)
                 .Where(p => !p.IsDeleted)
@@ -42,15 +42,15 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             return projects;
         }
 
-        public async Task<Project?> GetById(int id)
+        public async Task<Project> GetById(int id)
         {
-            return await _context.Projects
+            return await _dbContext.Projects
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<Project?> GetDetailsById(int id)
+        public async Task<Project> GetDetailsById(int id)
         {
-            var project = await _context.Projects
+            var project = await _dbContext.Projects
                 .Include(p => p.Client)
                 .Include(p => p.Freelancer)
                 .Include(p => p.Comments)
@@ -61,8 +61,13 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
 
         public async Task Update(Project project)
         {
-            _context.Projects.Update(project);
-            await _context.SaveChangesAsync();
+            _dbContext.Projects.Update(project);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

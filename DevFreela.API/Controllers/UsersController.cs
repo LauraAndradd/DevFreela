@@ -35,14 +35,14 @@ namespace DevFreela.API.Controllers
         // POST api/users
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Post(InsertUserCommand command)
+        public async Task<IActionResult> Post(CreateUserCommand command)
         {
             await _mediator.Send(command);
             return NoContent();
         }
 
         [HttpPost("{id}/skills")]
-        public async Task<IActionResult> PostSkills(int id, InsertUserSkillsCommand command)
+        public async Task<IActionResult> PostSkills(int id, CreateUserSkillsCommand command)
         {
             command.UserId = id;
             await _mediator.Send(command);
@@ -69,6 +69,7 @@ namespace DevFreela.API.Controllers
             {
                 return BadRequest();
             }
+
 
             return Ok(loginUserviewModel);
         }

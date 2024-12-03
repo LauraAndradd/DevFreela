@@ -26,13 +26,13 @@ namespace DevFreela.API.Controllers
         // GET api/projects?search=crm
         [HttpGet]
         [Authorize(Roles = "client, freelancer")]
-        public async Task<IActionResult> Get(string search = "")
+        public async Task<IActionResult> Get(string query)
         {
-            var query = new GetAllProjectsQuery();
+            var getAllProjectsQuery = new GetAllProjectsQuery(query);
 
-            var result = await _mediator.Send(query);
+            var projects = await _mediator.Send(getAllProjectsQuery);
 
-            return Ok(result);
+            return Ok(projects);
         }
 
         // GET api/projects/1234
@@ -40,20 +40,22 @@ namespace DevFreela.API.Controllers
         [Authorize(Roles = "client, freelancer")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _mediator.Send(new GetProjectByIdQuery(id));
+            var query = new GetProjectByIdQuery(id);
 
-            if (!result.IsSuccess)
+            var project = await _mediator.Send(query);
+
+            if (project == null)
             {
-                return BadRequest(result.Message);
+                return NotFound();
             }
 
-            return Ok(result);
+            return Ok(project);
         }
 
         // POST api/projects
         [HttpPost]
         [Authorize(Roles = "client")]
-        public async Task<IActionResult> Post(InsertProjectCommand command)
+        public async Task<IActionResult> Post(CreateProjectCommand command)
         {
             var result = await _mediator.Send(command);
 
@@ -65,12 +67,7 @@ namespace DevFreela.API.Controllers
         [Authorize(Roles = "client")]
         public async Task<IActionResult> Put(int id, UpdateProjectCommand command)
         {
-            var result = await _mediator.Send(command);
-
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return NoContent();
         }
@@ -80,12 +77,9 @@ namespace DevFreela.API.Controllers
         [Authorize(Roles = "client")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new DeleteProjectCommand(id));
+            var command = new DeleteProjectCommand(id);
 
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return NoContent();
         }
@@ -95,12 +89,9 @@ namespace DevFreela.API.Controllers
         [Authorize(Roles = "client")]
         public async Task<IActionResult> Start(int id)
         {
-            var result = await _mediator.Send(new StartProjectCommand(id));
+            var command = new StartProjectCommand(id);
 
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return NoContent();
         }
@@ -110,12 +101,9 @@ namespace DevFreela.API.Controllers
         [Authorize(Roles = "client")]
         public async Task<IActionResult> Complete(int id)
         {
-            var result = await _mediator.Send(new CompleteProjectCommand(id));
+            var command = new FinishProjectCommand(id);
 
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return NoContent();
         }
@@ -123,14 +111,9 @@ namespace DevFreela.API.Controllers
         // POST api/projects/1234/comments
         [HttpPost("{id}/comments")]
         [Authorize(Roles = "client, freelancer")]
-        public async Task<IActionResult> PostComment(int id, InsertCommentCommand command)
+        public async Task<IActionResult> PostComment(int id, CreateCommentCommand command)
         {
-            var result = await _mediator.Send(command);
-
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return NoContent();
         }

@@ -40,7 +40,7 @@ namespace DevFreela.API
             services.AddControllers(options => options.Filters.Add(typeof(ValidationFilter)))
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateUserValidator>());
 
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(InsertProjectCommand).Assembly));
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
 
             services.AddSwaggerGen(c =>
             {

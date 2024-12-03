@@ -4,12 +4,13 @@ namespace DevFreela.Core.Repositories
 {
     public interface IProjectRepository
     {
-        Task<List<Project>> GetAll();
+        Task<List<Project>> GetAllAsync();
         Task<Project?> GetDetailsById(int id);
         Task<Project?> GetById(int id);
-        Task<int> Add(Project project);
+        Task<int> AddAsync(Project project);
         Task Update(Project project);
-        Task AddComment(ProjectComment comment);
+        Task AddCommentAsync(ProjectComment comment);
         Task<bool> Exists(int id);
+        Task SaveChangesAsync();
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DevFreela.Application.Queries.GetAllSkills
 {
-    public class GetAllSkillsQuery : IRequest<ResultViewModel<List<SkillViewModel>>>
+    public class GetAllSkillsQuery : IRequest<List<SkillViewModel>>
     {
     }
 }

@@ -28,12 +28,9 @@ namespace DevFreela.API.Controllers
 
         // POST api/skills
         [HttpPost]
-        public async Task<IActionResult> Post(InserSkillCommand command)
+        public async Task<IActionResult> Post(CreateSkillCommand command)
         {
-            var result = await _mediator.Send(new InserSkillCommand(command.Description));
-
-            if (!result.IsSuccess)
-                return BadRequest(result.Message);
+            var result = await _mediator.Send(new CreateSkillCommand(command.Description));
 
             return NoContent();
         }

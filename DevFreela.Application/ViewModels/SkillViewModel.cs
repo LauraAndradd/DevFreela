@@ -4,15 +4,17 @@ namespace DevFreela.Application.Models
 {
     public class SkillViewModel
     {
-        public SkillViewModel(string description)
+        public SkillViewModel(int id, string description)
         {
+            Id = id;
             Description = description;
         }
 
+        public int Id { get; private set; }
         public string Description { get; private set; }
 
         public static SkillViewModel FromEntity(Skill entity)
-            => new(entity.Description);
+            => new(entity.Id, entity.Description);
 
     }
 }
