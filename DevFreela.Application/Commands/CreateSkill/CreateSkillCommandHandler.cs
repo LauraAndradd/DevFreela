@@ -1,5 +1,4 @@
-﻿using DevFreela.Application.Models;
-using DevFreela.Core.Entities;
+﻿using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
 using MediatR;
 

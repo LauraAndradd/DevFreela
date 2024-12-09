@@ -13,7 +13,5 @@ namespace DevFreela.Application.Commands.InsertSkill
 
         public string Description { get; set; }
 
-        public Skill ToEntity()
-            => new Skill(Description);
     }
 }

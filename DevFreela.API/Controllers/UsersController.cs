@@ -37,8 +37,8 @@ namespace DevFreela.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Post(CreateUserCommand command)
         {
-            await _mediator.Send(command);
-            return NoContent();
+            var userId = await _mediator.Send(command); 
+            return Ok(userId);
         }
 
         [HttpPost("{id}/skills")]

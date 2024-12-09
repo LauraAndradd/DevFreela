@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DevFreela.Application.Commands.InsertUserSkills
 {
-    internal class CreateUserSkillsCommandHandler : IRequestHandler<CreateUserSkillsCommand, Unit>
+    public class CreateUserSkillsCommandHandler : IRequestHandler<CreateUserSkillsCommand, Unit>
     {
         private readonly IUserRepository _userRepository;
 

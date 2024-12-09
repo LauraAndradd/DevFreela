@@ -34,10 +34,8 @@ namespace DevFreela.Core.Entities
 
         public void Cancel()
         {
-            if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Suspended)
-            {
-                Status = ProjectStatusEnum.Cancelled;
-            }
+            Status = ProjectStatusEnum.Cancelled;
+            SetAsDeleted();
         }
 
         public void Start()
@@ -71,6 +69,16 @@ namespace DevFreela.Core.Entities
             Title = title;
             Description = description;
             TotalCost = totalCost;
+        }
+
+        public void SetClient(User client)
+        {
+            Client = client;
+        }
+
+        public void SetFreelancer(User freelancer)
+        {
+            Freelancer = freelancer;
         }
     }
 }
