@@ -3,7 +3,7 @@
 </h1>
 
 <h4 align="center">
-	🚧  DevFreela ♻️ Em Progresso 🚀 🚧
+	🚧  DevFreela ♻️ Concluído 🚀 🚧
 </h4>
 
 <p align="center">
